@@ -1,0 +1,91 @@
+div.container {
+  position: relative;
+}
+
+div.message-board {
+  width: 900px;
+  height: 500px;
+  overflow: scroll;
+}
+
+div.message {
+  background-color: lightblue;
+  border: 2px solid lightsteelblue;
+  padding: 5px;
+  border-radius: 5px;
+  font-family: monospace;
+  display: inline-block;
+  margin: 2px;
+}
+  
+div.message-container {
+  overflow: auto;
+}
+
+div.message > div.user {
+  background-color: lightsteelblue;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 0 5px;
+  display: inline-block;
+  font-size: 12px;
+  color: papayawhip;
+}
+  
+div.message.friend {
+  float: right;
+  margin-right: 15px;
+}
+
+div.message > div.text {
+  display: inline-block;
+}
+  
+button {
+  box-shadow: rgb(255, 255, 255) 0px 1px 0px 0px inset;
+  background: linear-gradient(rgb(255, 255, 255) 5%, rgb(246, 246, 246) 100%) rgb(255, 255, 255);
+  border-radius: 6px;
+  border: 1px solid rgb(220, 220, 220);
+  display: inline-block;
+  cursor: pointer;
+  color: rgb(102, 102, 102);
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  margin: 0 5px;
+}
+  
+input[type=text] {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 6px;
+  width: 500px;
+  margin: 5px;
+}
+
+div.error {
+  position: absolute;
+  top: -48px;
+  color: azure;
+  background-color: chocolate;
+  border-radius: 5px;
+  font-family: monospace;
+  padding: 10px;
+  margin: 5px;
+  display: inline-block;
+}
+
+div.error-arrow {
+  position: absolute;
+  top: -8px;
+  left:40px;
+  z-index: 5;
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid chocolate;
+}
