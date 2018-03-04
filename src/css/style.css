@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 div.container {
   position: relative;
 }
@@ -69,8 +73,8 @@ input[type=text] {
 div.error {
   position: absolute;
   top: -48px;
-  color: azure;
-  background-color: chocolate;
+  color: chocolate;
+  background-color: burlywood;
   border-radius: 5px;
   font-family: monospace;
   padding: 10px;
@@ -87,5 +91,5 @@ div.error-arrow {
   height: 0; 
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 10px solid chocolate;
+  border-top: 10px solid burlywood;
 }
