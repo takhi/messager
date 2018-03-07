@@ -8,8 +8,8 @@ export default class MessageBoard extends Component {
     }
     _createMessages(messages) {
         let me = this.props.me;
-        return messages.map((message, index) => {
-            return <Message key={index} me={me} user={message.user} text={message.text} />
+        return messages.map((message) => {
+            return <Message key={message.key} me={me} user={message.user} text={message.text} />
         });
     }
     render() {
