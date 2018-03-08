@@ -17,6 +17,7 @@ export default class SendMessage extends Component {
         this.setState({inputText: e.target.value});
     }
     _handleClick() {
+        if (this.state.inputText.trim() === '') return;
         let message = {user: this.props.user, text: this.state.inputText};
         this.setState({inputText: ''});
         this.props.onSend(message);
