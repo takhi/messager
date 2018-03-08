@@ -24,12 +24,12 @@ export default class Join extends Component {
         this.setState({inputText: ''});
     }
     render() {
-        if (this.props.joined) return null;
-        return (
+        if (this.props.enabled) return (
             <div>
                 <input type="text" value={this.state.inputText} onChange={this._handleChange} placeholder={PLACEHOLDER} />
                 <button onClick={this._handleClick}>Join</button>
             </div>
         );
+        return null;
     }
 }

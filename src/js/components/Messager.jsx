@@ -25,8 +25,7 @@ export default class Messager extends Component {
         this._handleNewMessage = this._handleNewMessage.bind(this);
     }
     _handleJoin() {
-        let user = this._user;
-        this.setState({joinedIn: true, user: user, isError: false});
+        this.setState({joinedIn: true, isError: false});
         this._server.getMessages();
     }
     _handleJoinFail(error) {
@@ -67,10 +66,10 @@ export default class Messager extends Component {
     render() {
         return (
             <div>
-                <MessageBoard me={this.state.user} messages={this.state.messages} />
+                <MessageBoard me={this._user} messages={this.state.messages} />
                 <ErrorPopup show={this.state.isError} message={this.state.errorMessage} />
-                <MessageInput enabled={this.state.joinedIn} user={this.state.user} onSend={this._sendMessage} />
-                <JoinInput joined={this.state.joinedIn} onJoin={this._joinServer} onError={this._handleError} />
+                <MessageInput enabled={this.state.joinedIn} user={this._user} onSend={this._sendMessage} />
+                <JoinInput enabled={!this.state.joinedIn} onJoin={this._joinServer} onError={this._handleError} />
             </div>
         );
     }
