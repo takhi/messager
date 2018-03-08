@@ -10,6 +10,10 @@ export default class Join extends Component {
         this.state = {inputText: ''};
         this._handleChange = this._handleChange.bind(this);
         this._handleClick = this._handleClick.bind(this);
+        this._handleKeyPress = this._handleKeyPress.bind(this);
+    }
+    _handleKeyPress(e) {
+        if (e.key === 'Enter') this._handleClick();
     }
     _handleChange(e) {
         this.setState({inputText: e.target.value});
@@ -26,7 +30,7 @@ export default class Join extends Component {
     render() {
         if (this.props.enabled) return (
             <div>
-                <input type="text" value={this.state.inputText} onChange={this._handleChange} placeholder={PLACEHOLDER} />
+                <input type="text" value={this.state.inputText} onChange={this._handleChange} onKeyPress={this._handleKeyPress} placeholder={PLACEHOLDER} />
                 <button onClick={this._handleClick}>Join</button>
             </div>
         );
