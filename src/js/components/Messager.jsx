@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Message from './Message';
+import HUD from './HUD';
 import MessageBoard from './MessageBoard';
 import ErrorPopup from './ErrorPopup';
 import JoinInput from './JoinInput';
@@ -14,12 +15,15 @@ export default class Messager extends Component {
             joinedIn: false,
             isError: false,
             isLoading: false,
+            users: [],
             messages: []
         };
         this._joinServer = this._joinServer.bind(this);
         this._sendMessage = this._sendMessage.bind(this);
         this._handleJoin = this._handleJoin.bind(this);
+        this._handleJoined = this._handleJoined.bind(this);
         this._handleJoinFail = this._handleJoinFail.bind(this);
+        this._handleLeave = this._handleLeave.bind(this);
         this._handleError = this._handleError.bind(this);
         this._handleMessages = this._handleMessages.bind(this);
         this._handleNewMessage = this._handleNewMessage.bind(this);
@@ -30,6 +34,12 @@ export default class Messager extends Component {
     }
     _handleJoinFail(error) {
         this.setState({isError: true, errorMessage: error.message});
+    }
+    _handleJoined(users) {
+        this.setState({users: users});
+    }
+    _handleLeave(users) {
+        this.setState({users: users});
     }
     _handleError(error) {
         this.setState({isError: true, errorMessage: error.message});
@@ -58,7 +68,9 @@ export default class Messager extends Component {
             server.ping();
             server.onPong = this._handlePong;
             server.onJoin = this._handleJoin;
+            server.onJoined = this._handleJoined;
             server.onJoinFail = this._handleJoinFail;
+            server.onLeave = this._handleLeave;
             server.onMessages = this._handleMessages;
             server.onNewMessage = this._handleNewMessage;
         }
@@ -66,7 +78,10 @@ export default class Messager extends Component {
     render() {
         return (
             <div>
-                <MessageBoard me={this._user} messages={this.state.messages} />
+                <div className="container">
+                    <MessageBoard me={this._user} messages={this.state.messages} />
+                    <HUD users={this.state.users} />
+                </div>
                 <ErrorPopup show={this.state.isError} message={this.state.errorMessage} />
                 <MessageInput enabled={this.state.joinedIn} user={this._user} onSend={this._sendMessage} />
                 <JoinInput enabled={!this.state.joinedIn} onJoin={this._joinServer} onError={this._handleError} />

@@ -7,9 +7,40 @@ div.container {
 }
 
 div.message-board {
-  width: 900px;
+  width: 800px;
   height: 500px;
+  display: inline-block;
   overflow: scroll;
+}
+
+div.HUD {
+  position: absolute;
+  top: 0px;
+  left: 800px;
+  width: 200px;
+  height: 500px;
+  padding: 10px;
+}
+
+div.HUD > div.user-status {
+  background-color: darkslategray;
+  border: 1px solid antiquewhite;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 20px;
+  color: papayawhip;
+  font-family: monospace;
+}
+
+.circle {
+  background: powderblue;
+  box-shadow: 0px 0px 5px dodgerblue;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: none;
+  margin-right: 5px;
 }
 
 div.message {

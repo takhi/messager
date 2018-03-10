@@ -1,4 +1,5 @@
 const SERVER = {messages: 'ALL', new_message: 'NEW', success: 'OK', fail: 'FAIL', pong: 'PONG'};
+SERVER.USER = {joined: 'JOINED', left: 'LEFT'};
 const CLIENT = {get_messages: 'GET', add_message: 'POST', join: 'JOIN', ping: 'PING'};
 
 const ERROR_MESSAGE = {user_taken: 'Username is taken'};
@@ -25,6 +26,12 @@ export default class MessageServer {
                     break;
                 case SERVER.fail:
                     if (server.request === CLIENT.join) this.onJoinFail({message: ERROR_MESSAGE.user_taken});
+                    break;
+                case SERVER.USER.joined:
+                    this.onJoined(server.data.users);
+                    break;
+                case SERVER.USER.left:
+                    this.onLeave(server.data.users);
             }
         }
         connection.onopen = () => {
@@ -56,7 +63,9 @@ export default class MessageServer {
     onMessages(board) {}
     onNewMessage(message) {}
     onJoin() {}
+    onJoined(users) {}
     onJoinFail() {}
+    onLeave(users) {}
     onPong() {}
 }
 
