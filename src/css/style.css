@@ -51,6 +51,7 @@ div.message {
   font-family: monospace;
   display: inline-block;
   margin: 2px;
+  max-width: 500px;
 }
   
 div.message-container {
