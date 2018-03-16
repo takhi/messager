@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackPluginCopy = require('webpack-plugin-copy');
 
 const config = {
     entry: ['./src/js/index.jsx'],
@@ -20,7 +21,8 @@ const config = {
                 filename: 'index.html',
                 template: './src/template/index.html'
             }
-        )
+        ),
+        new WebpackPluginCopy([{ from: 'config.json', to: 'config.json' }])
     ],
     module: {
         rules: [{
