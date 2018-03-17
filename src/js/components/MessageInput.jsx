@@ -14,10 +14,10 @@ export default class SendMessage extends Component {
         this._checkIsTyping = this._checkIsTyping.bind(this);
     }
     _checkIsTyping() {
-        timeOutID ? clearTimeout(timeOutID) : this.props.onTyping();
+        timeOutID ? clearTimeout(timeOutID) : this.props.onTyping(true);
         timeOutID = setTimeout(() => {
             timeOutID = undefined;
-            this.props.onNotTyping();
+            this.props.onTyping(false);
         }, TYPING_WAIT);
     }
     _handleKeyPress(e) {

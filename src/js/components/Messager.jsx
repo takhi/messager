@@ -99,8 +99,7 @@ export default class Messager extends Component {
                     <HUD users={this.state.users} />
                 </div>
                 <ErrorPopup show={this.state.isError} message={this.state.errorMessage} />
-                <MessageInput enabled={this.state.joinedIn} user={this._user} onTyping={()=>this._typing(true)} 
-                    onNotTyping={()=>this._typing(false)} onSend={this._sendMessage} />
+                <MessageInput enabled={this.state.joinedIn} user={this._user} onTyping={this._typing} onSend={this._sendMessage} />
                 <JoinInput enabled={!this.state.joinedIn} onJoin={this._joinServer} onError={this._handleError} />
             </div>
         );
