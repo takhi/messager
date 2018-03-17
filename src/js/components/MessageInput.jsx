@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
 const PLACEHOLDER = 'enter message';
+const TYPING_WAIT = 3000;
+let timeOutID;
 
 export default class SendMessage extends Component {
     constructor(props) {
@@ -9,8 +11,17 @@ export default class SendMessage extends Component {
         this._handleChange = this._handleChange.bind(this);
         this._handleClick = this._handleClick.bind(this);
         this._handleKeyPress = this._handleKeyPress.bind(this);
+        this._checkIsTyping = this._checkIsTyping.bind(this);
+    }
+    _checkIsTyping() {
+        timeOutID ? clearTimeout(timeOutID) : this.props.onTyping();
+        timeOutID = setTimeout(() => {
+            timeOutID = undefined;
+            this.props.onNotTyping();
+        }, TYPING_WAIT);
     }
     _handleKeyPress(e) {
+        this._checkIsTyping();
         if (e.key === 'Enter') this._handleClick();
     }
     _handleChange(e) {

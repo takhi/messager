@@ -6,7 +6,7 @@ export default class HUD extends Component {
         super(props);
     }
     render() {
-        let users = this.props.users.map(user => <User key={user.name} name={user.name} />);
+        let users = this.props.users.map(user => <User key={user.name} name={user.name} isTyping={user.isTyping} />);
         return (
             <div className="HUD">
                 {users}

@@ -27,6 +27,8 @@ export default class Messager extends Component {
         this._handleError = this._handleError.bind(this);
         this._handleMessages = this._handleMessages.bind(this);
         this._handleNewMessage = this._handleNewMessage.bind(this);
+        this._typing = this._typing.bind(this);
+        this._handleTyping = this._handleTyping.bind(this);
     }
     _handleJoin() {
         this.setState({joinedIn: true, isError: false});
@@ -62,6 +64,19 @@ export default class Messager extends Component {
     _handlePong() {
         console.log('ponged');
     }
+    _handleTyping(isTyping, user) {
+        let users = this.state.users;
+        for (let u of users) {
+            if (u.name === user) {
+                u.isTyping = isTyping;
+                break;
+            }
+        }
+        this.setState({users: users});
+    }
+    _typing(isTyping) {
+        this._server.typing(isTyping);
+    }
     componentWillMount() {
         let server = this._server = new MessageServer(this.props.url);
         server.onOpen = () => {
@@ -73,6 +88,7 @@ export default class Messager extends Component {
             server.onLeave = this._handleLeave;
             server.onMessages = this._handleMessages;
             server.onNewMessage = this._handleNewMessage;
+            server.onTyping = this._handleTyping;
         }
     }
     render() {
@@ -83,7 +99,8 @@ export default class Messager extends Component {
                     <HUD users={this.state.users} />
                 </div>
                 <ErrorPopup show={this.state.isError} message={this.state.errorMessage} />
-                <MessageInput enabled={this.state.joinedIn} user={this._user} onSend={this._sendMessage} />
+                <MessageInput enabled={this.state.joinedIn} user={this._user} onTyping={()=>this._typing(true)} 
+                    onNotTyping={()=>this._typing(false)} onSend={this._sendMessage} />
                 <JoinInput enabled={!this.state.joinedIn} onJoin={this._joinServer} onError={this._handleError} />
             </div>
         );

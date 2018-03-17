@@ -1,6 +1,6 @@
 const SERVER = {messages: 'ALL', new_message: 'NEW', success: 'OK', fail: 'FAIL', pong: 'PONG'};
-SERVER.USER = {joined: 'JOINED', left: 'LEFT'};
-const CLIENT = {get_messages: 'GET', add_message: 'POST', join: 'JOIN', ping: 'PING'};
+SERVER.USER = {joined: 'JOINED', left: 'LEFT', typing: 'TYPE', not_typing: 'NTYPE'};
+const CLIENT = {get_messages: 'GET', add_message: 'POST', join: 'JOIN', ping: 'PING', typing: 'TYPE', not_typing: 'NTYPE'};
 
 const ERROR_MESSAGE = {user_taken: 'Username is taken'};
 
@@ -32,6 +32,13 @@ export default class MessageServer {
                     break;
                 case SERVER.USER.left:
                     this.onLeave(server.data.users);
+                    break;
+                case SERVER.USER.typing:
+                    this.onTyping(true, server.data);
+                    break;
+                case SERVER.USER.not_typing:
+                    this.onTyping(false, server.data);
+                    break;
             }
         }
         connection.onopen = () => {
@@ -55,6 +62,11 @@ export default class MessageServer {
     ping() {
         this.connection.send(JSON.stringify({request: CLIENT.ping}));
     }
+    typing(isTyping) {
+        this.connection.send(JSON.stringify({
+            request: isTyping ? CLIENT.typing : CLIENT.not_typing
+        }));
+    }
     close() {
         this.connection.close();
     }
@@ -67,6 +79,7 @@ export default class MessageServer {
     onJoinFail() {}
     onLeave(users) {}
     onPong() {}
+    onTyping(isTyping, user) {}
 }
 
 MessageServer.SERVER = SERVER;
