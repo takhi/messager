@@ -8,6 +8,11 @@ import MessageInput from './MessageInput';
 
 import MessageServer from '../classes/MessageServer';
 
+const newMessageDingURL = 'ding.ogg';
+const leaveJoinChimeURL = 'chime.ogg';
+let newMessageDing = new Audio(newMessageDingURL);
+let leaveJoinChime = new Audio(leaveJoinChimeURL);
+
 export default class Messager extends Component {
     constructor(props) {
         super(props);
@@ -38,10 +43,10 @@ export default class Messager extends Component {
         this.setState({isError: true, errorMessage: error.message});
     }
     _handleJoined(users) {
-        this.setState({users: users});
+        this.setState({users: users}, ()=>leaveJoinChime.play());
     }
     _handleLeave(users) {
-        this.setState({users: users});
+        this.setState({users: users}, ()=>leaveJoinChime.play());
     }
     _handleError(error) {
         this.setState({isError: true, errorMessage: error.message});
@@ -52,6 +57,7 @@ export default class Messager extends Component {
     _handleNewMessage(message) {
         let messages = this.state.messages;
         messages.push(message);
+        if (message.user !== this._user) newMessageDing.play();
         this.setState({messages: messages});
     }
     _joinServer(user) {

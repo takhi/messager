@@ -22,7 +22,7 @@ const config = {
                 template: './src/template/index.html'
             }
         ),
-        new WebpackPluginCopy([{ from: 'config.json', to: 'config.json' }])
+        new WebpackPluginCopy([{from: 'config.json', to: 'config.json'}, {from: '*.ogg'}])
     ],
     module: {
         rules: [{

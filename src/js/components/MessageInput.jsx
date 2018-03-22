@@ -4,7 +4,7 @@ const PLACEHOLDER = 'enter message';
 const TYPING_WAIT = 3000;
 let timeOutID;
 
-export default class SendMessage extends Component {
+export default class MessageInput extends Component {
     constructor(props) {
         super(props);
         this.state = {inputText: ''};
