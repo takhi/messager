@@ -41,6 +41,10 @@ div.HUD > div.user-status {
   border: none;
   margin-right: 5px;
 }
+  
+div.message-container {
+  overflow: auto;
+}
 
 div.message {
   background-color: lightblue;
@@ -51,10 +55,6 @@ div.message {
   display: inline-block;
   margin: 2px;
   max-width: 500px;
-}
-  
-div.message-container {
-  overflow: auto;
 }
 
 div.message > div.user {
@@ -70,6 +70,10 @@ div.message > div.user {
 div.message.friend {
   float: right;
   margin-right: 15px;
+}
+
+div.message.atMe {
+  background-color: lightsalmon;
 }
 
 div.message > div.text {
