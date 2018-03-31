@@ -48,6 +48,7 @@ div.message-container {
 
 div.message {
   background-color: lightblue;
+  color: dimgray;
   border: 2px solid lightsteelblue;
   padding: 5px;
   border-radius: 5px;
@@ -74,6 +75,7 @@ div.message.friend {
 
 div.message.atMe {
   background-color: lightsalmon;
+  border: 2px solid darksalmon;
 }
 
 div.message > div.text {
@@ -99,6 +101,7 @@ button {
   
 input[type=text] {
   border: 1px solid lightgray;
+  color: dimgray;
   border-radius: 5px;
   padding: 6px;
   width: 500px;

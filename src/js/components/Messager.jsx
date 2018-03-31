@@ -8,20 +8,37 @@ import MessageInput from './MessageInput';
 
 import MessageServer from '../classes/MessageServer';
 
+import {updateUsers, updateUserTypyingStatus, loadBoard, addMessage} from '../actions/messagerActions'
+import {connect} from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return {
+        users: state.users,
+        messages: state.messages
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateUserTypyingStatus: (status) => dispatch(updateUserTypyingStatus(status)),
+        updateUsers: (users) => dispatch(updateUsers(users)),
+        loadBoard: (board) => dispatch(loadBoard(board)),
+        addMessage: (message) => dispatch(addMessage(message))
+    }
+}
+
 const newMessageDingURL = 'ding.ogg';
 const leaveJoinChimeURL = 'chime.ogg';
 let newMessageDing = new Audio(newMessageDingURL);
 let leaveJoinChime = new Audio(leaveJoinChimeURL);
 
-export default class Messager extends Component {
+class Messager extends Component {
     constructor(props) {
         super(props);
         this.state = {
             joinedIn: false,
             isError: false,
-            isLoading: false,
-            users: [],
-            messages: []
+            isLoading: false
         };
         this._joinServer = this._joinServer.bind(this);
         this._sendMessage = this._sendMessage.bind(this);
@@ -43,22 +60,22 @@ export default class Messager extends Component {
         this.setState({isError: true, errorMessage: error.message});
     }
     _handleJoined(users) {
-        this.setState({users: users}, ()=>leaveJoinChime.play());
+        this.props.updateUsers(users);
+        leaveJoinChime.play();
     }
     _handleLeave(users) {
-        this.setState({users: users}, ()=>leaveJoinChime.play());
+        this.props.updateUsers(users);
+        leaveJoinChime.play();
     }
     _handleError(error) {
         this.setState({isError: true, errorMessage: error.message});
     }
     _handleMessages(board) {
-        this.setState({messages: board});
+        this.props.loadBoard(board);
     }
     _handleNewMessage(message) {
-        let messages = this.state.messages;
-        messages.push(message);
         if (message.user !== this._user) newMessageDing.play();
-        this.setState({messages: messages});
+        this.props.addMessage(message);
     }
     _joinServer(user) {
         this._user = user;
@@ -71,14 +88,8 @@ export default class Messager extends Component {
         console.log('ponged');
     }
     _handleTyping(isTyping, user) {
-        let users = this.state.users;
-        for (let u of users) {
-            if (u.name === user) {
-                u.isTyping = isTyping;
-                break;
-            }
-        }
-        this.setState({users: users});
+        
+        this.props.updateUserTypyingStatus({isTyping: isTyping, user: user});
     }
     _typing(isTyping) {
         this._server.typing(isTyping);
@@ -101,8 +112,8 @@ export default class Messager extends Component {
         return (
             <div>
                 <div className="container">
-                    <MessageBoard me={this._user} messages={this.state.messages} />
-                    <HUD users={this.state.users} />
+                    <MessageBoard me={this._user} messages={this.props.messages} />
+                    <HUD users={this.props.users} />
                 </div>
                 <ErrorPopup show={this.state.isError} message={this.state.errorMessage} />
                 <MessageInput enabled={this.state.joinedIn} user={this._user} onTyping={this._typing} onSend={this._sendMessage} />
@@ -111,3 +122,5 @@ export default class Messager extends Component {
         );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messager);
