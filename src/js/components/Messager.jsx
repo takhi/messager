@@ -8,8 +8,8 @@ import MessageInput from './MessageInput';
 
 import MessageServer from '../classes/MessageServer';
 
-const newMessageDingURL = 'ding.ogg';
-const leaveJoinChimeURL = 'chime.ogg';
+const newMessageDingURL = 'sounds/ding.ogg';
+const leaveJoinChimeURL = 'sounds/chime.ogg';
 let newMessageDing = new Audio(newMessageDingURL);
 let leaveJoinChime = new Audio(leaveJoinChimeURL);
 
